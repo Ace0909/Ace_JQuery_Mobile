@@ -1,0 +1,468 @@
+<!DOCTYPE html>
+<html>
+
+<head>
+	<meta charset="utf-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1">
+	<title>Meeting</title>
+	<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css">
+	<link rel="stylesheet" href="css/from.css">
+	<script src="js/jquery.js"></script>
+	<script src="js/jquery.mobile-1.4.5.min.js"></script>
+	
+	<link href="css/fullcalendar.min.css" rel="stylesheet" />
+	<link href="css/fullcalendar.print.min.css" rel="stylesheet" media="print" />
+	<!-- <script src='js/moment.js'></script> -->
+	<script src="js/moment.min.js"></script>
+	<script src="js/fullcalendar.min.js"></script>
+	<style>
+
+		body {
+			    font-family: 'Roboto', sans-serif;
+			    font-size: 16px;
+			    font-weight: 300;
+			    color: #888;
+			    line-height: 30px;
+			    text-align: center;
+		}
+
+		#calendar {
+			max-width: 900px;
+			margin: 0 auto;
+		}
+		
+		div.ui-input-text {
+			width: 100% !important;
+			text-align: center;
+			margin: 0 auto;	
+		}
+		
+    
+
+	    .row{
+	    	padding-top: 12%;
+	    }
+
+    
+	</style>
+	<script>
+
+		$(document).ready(function() {
+          	$("#check_clear").click(function(){
+	          	$("label").removeClass( "ui-checkbox-on" ).addClass( "ui-checkbox-off" );
+	          	$("input[type='checkbox']").attr("checked", false);
+            });
+
+            $("#check_all").click(function(){
+	          	$("label").removeClass( "ui-checkbox-off" ).addClass( "ui-checkbox-on" );
+	          	$("input[type='checkbox']").attr("checked", true);
+            });
+
+         (function () {
+		  	$(document).on("pageshow", "#broadcast", function () {
+		    // 頁面載入會觸發
+		    // 程式寫在這裡
+		    $("#seltime").hide();
+
+			    if($("#flip-2").val() == "on"){
+			    	//$("#seltime").show();
+			    }else{
+			    	$("#seltime").hide();
+			    }
+		    
+		  });
+		})();
+
+		});
+		
+        function Getdate(){
+            　var Today=new Date();
+            　Today=(Today.getFullYear()+ "-" + (Today.getMonth()+1) + "-" + Today.getDate());
+        }
+    
+		function initIndex(){
+			$('#calendar').fullCalendar({
+				header: {
+					left: 'prev,next today',
+					center: 'title',
+					right: 'month,agendaWeek,agendaDay,listWeek'
+				},
+
+				defaultDate:'2018-01-01',
+				navLinks: true, // can click day/week names to navigate views
+				editable: true,
+				eventLimit: true, // allow "more" link when too many events
+				events: [
+					{
+						title: 'All Day Event',
+						start: '2017-11-01',
+					},
+					{
+						title: 'Long Event',
+						start: '2017-11-07',
+						end: '2017-11-10'
+					},
+					{
+						id: 99,
+						title: 'Repeating Event',
+						start: '2017-11-09T16:00:00',
+						end: '2017-11-09T21:00:00',
+						color: '#257e4a'
+					},
+					{
+						id: 999,
+						title: 'Repeating Event',
+						start: '2017-11-16T16:00:00'
+					},
+					{
+						title: 'Conference',
+						start: '2017-11-11',
+						end: '2017-11-13'
+					},
+					{
+						title: 'Click for Google',
+						url: 'http://google.com/',
+						start: '2017-11-28'
+					}
+				]
+			});
+		}
+
+		function Login(){
+			var acc = $("#account").val();
+			var pwd = $("#password").val();
+
+			if(acc == acc){
+				location.href = "#index"
+				setTimeout(function(){initIndex()}, 1000);
+			}
+			else
+				alert("帳號密碼錯誤");
+		}
+    
+	    function Pwd_check(){
+	        var pwd = $("#acc_password").val();
+	        var pwd2 = $("#acc_password2").val();
+	        
+	        if(pwd ==""){
+	        	alert("密碼不能為空");
+	        }
+	        else{
+		        if(pwd == pwd2){
+		            $("#acc_password").val("");
+		            $("#acc_password2").val("");
+		            location.href = "#setting"
+		        }
+		        else{
+		        alert("密碼確認錯誤");
+			    }
+			}
+		}
+
+		function Metting_check(){
+		location.href = "#index"
+		}
+		
+		function Clear(){
+			var acc = $("#account").val();
+			var pwd = $("#password").val();
+			
+			$("#account").val("");
+		    $("#password").val("");
+        }
+
+
+
+        $(document).on("pageinit", "#broadcast", function () {
+        	//alert(";;;;;;;");
+        	$("#flip-2").on("change", 
+        		function(e){
+        			if("on" == this.value){
+        				//$("#seltime").show();
+        			}else{
+        				$("#seltime").hide();
+        			}
+        		}
+        	);
+
+        });
+
+
+
+	</script>
+</head>
+
+<body>
+
+<div data-role="page" id="login">
+
+	<div data-role="header">
+		<!-- <h1>登入</h1> -->
+		<img src="images/logo_new.jpg" width="100%" height="100%"/>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content login font-weight:bold;" id="main">
+
+		<div class="row">
+            <div class="col-sm-6 col-sm-offset-3 form-box">
+                <div class="form-bottom">
+                	<div style="text-align: center;">
+                		<h2 style="color: #a96808">歡迎登入本系統</h2>
+                		<h3>請輸入您的帳號密碼進行登入</h3>
+                	</div>
+		            <form role="form" action="" method="post" class="login-form">
+		            	<div class="form-group">
+		                	<input type="text" name="account" id="account" value="" placeholder="請輸入帳號..." class="form-username form-control" >
+		                </div>
+		                <div class="form-group" style="margin-top: 20px;">
+		                	<input type="password"  name="password" id="password" placeholder="請輸入密碼..." class="form-password form-control" autocomplete="off" >
+		                </div>
+		                <button onclick="Login();" class="btn" style="margin-top: 20px;background: #bf3428;color: white;">登入</button>
+		            </form>
+		        </div>
+            </div>
+        </div>
+	</div>
+	<div data-role="footer"  data-position="fixed">
+		<img src="images/copy_right.jpg" width="100%" height="100%"/>
+    </div><!-- /foot<!-- /content -->
+</div><!-- /page one -->
+
+<!-- Start of first page: #one -->
+<div data-role="page" id="index">
+    
+    <div data-role="header">
+        <h1>行事曆</h1>
+    </div><!-- /header -->
+    <div role="main" class="ui-content">
+    <img src="images/top_img.png" style="width: 100%" />
+        <div id="calendar"></div>
+    </div><!-- /content -->
+    
+    <div data-role="footer"  data-position="fixed">
+        <div data-role="navbar">	
+            <ul>
+                <li><a href="#listview" data-icon="grid" style="background-color:#c8e000;">通知</a></li>
+                <li><a href="#index" data-icon="calendar" class="ui-btn-active ui-state-persist" style="background-color:#c8e000;">行事曆</a></li>
+                <li><a href="#setting" data-icon="gear" style="background-color:#c8e000;">設定</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /page one -->
+
+<!-- Start of second page: #two -->
+<div data-role="page" id="listview">
+
+	<div data-role="header">
+		<h1>會議通知</h1>
+	</div><!-- /header -->
+
+	<div role="main" class="ui-content">
+		<img src="images/top_img.png" style="width: 100%" />
+		<div data-role="collapsibleset" data-theme="a" data-content-theme="b">
+			<div data-role="collapsible" data-collapsed="false">
+			<h2>2017/12/11</h2>
+
+			
+				<table data-role="table" id="table-custom-1" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-popup-theme="a">
+					<thead>
+						<tr>
+							<th>時間</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<fieldset data-role="controlgroup">
+									<input type="checkbox" name="checkbox-1a" id="checkbox-1a" checked="">
+									<label for="checkbox-1a" >10:00</label>
+									<input type="checkbox" name="checkbox-1" id="checkbox-1b" checked="">
+									<label for="checkbox-1b" >11:00</label>
+									<input type="checkbox" name="checkbox-1" id="checkbox-1c" checked="">
+									<label for="checkbox-1c" >13:00</label>
+								</fieldset>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div data-role="collapsibleset" data-theme="a" data-content-theme="b">
+			<div data-role="collapsible" data-collapsed="true">
+			<h2>2017/12/12</h2>
+				
+				<table data-role="table" id="table-custom-2" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-popup-theme="a">
+					<thead>
+						<tr>
+							<th>時間</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td>
+								<fieldset data-role="controlgroup">
+									<input type="checkbox" name="checkbox-2a" id="checkbox-2a" checked="">
+									<label for="checkbox-2a">10:00</label>
+									<input type="checkbox" name="checkbox-2b" id="checkbox-2b">
+									<label for="checkbox-2b">11:00</label>
+									<input type="checkbox" name="checkbox-2c" id="checkbox-2c" checked="">
+									<label for="checkbox-2c">13:00</label>
+								</fieldset>
+							</td>
+						</tr>
+					</tbody>
+				</table>
+			</div>
+		</div>
+
+		<div data-role="collapsibleset" data-theme="a" data-content-theme="b">
+			<div data-role="collapsible" data-collapsed="true">
+            <h2>2017/12/13</h2>
+
+                <table data-role="table" id="table-custom-3" class="ui-body-d ui-shadow table-stripe ui-responsive" data-column-btn-theme="b" data-column-popup-theme="a">
+                    <thead>
+                        <tr>
+                            <th>時間</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>
+                                <fieldset data-role="controlgroup">
+                                    <input type="checkbox" name="checkbox-3a" id="checkbox-3a" checked="">
+                                    <label for="checkbox-3a">10:00</label>
+                                    <input type="checkbox" name="checkbox-3b" id="checkbox-3b">
+                                    <label for="checkbox-3b">11:00</label>
+                                    <input type="checkbox" name="checkbox-3c" id="checkbox-3c" checked="">
+                                    <label for="checkbox-3c">13:00</label>
+                                </fieldset>
+                            </td>
+                        </tr>
+                    </tbody>
+                </table>
+			</div>
+		</div>
+        <div data-role="navbar">
+			<ul>
+				<li><button class="ui-shadow ui-btn ui-btn-b" id="check_all">全時段皆可以參加</button></li>
+				<li><button class="ui-shadow ui-btn ui-btn-b" id="check_clear">全時段皆無法參加</button></li>
+			</ul>
+		</div>
+		<button class="ui-shadow ui-btn ui-btn-b" onclick="Metting_check();">確認</button>
+
+			
+
+
+	</div><!-- /content -->
+
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+                <li><a href="#listview" data-icon="grid" class="ui-btn-active ui-state-persist" style="background-color:#c8e000;">通知</a></li>
+				<li><a href="#index" data-icon="calendar" style="background-color:#c8e000;">行事曆</a></li>
+				<li><a href="#setting" data-icon="gear" style="background-color:#c8e000;">設定</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page two -->
+
+<div data-role="page" id="setting">
+	<div data-role="header">
+		<h1>設定</h1>
+	</div><!-- /header -->
+	
+    <div role="main" class="ui-content">
+	<img src="images/top_img.png" style="width: 100%" />
+    <ul data-role="listview" data-inset="true"  data-divider-theme="a" data-filter="false" style="padding-top:10%;">
+            <li><a href="#account">帳號設定</a></li>
+			<li><a href="#broadcast">通知設定</a></li>
+			<li><a href="#login">登出</a></li>
+		</ul>
+	
+	</div><!-- /content -->
+	
+	<div data-role="footer" data-position="fixed">
+		<div data-role="navbar">
+			<ul>
+				<li><a href="#listview" data-icon="grid" style="background-color:#c8e000;">通知</a></li>
+				<li><a href="#index" data-icon="calendar" style="background-color:#c8e000;">行事曆</a></li>
+				<li><a href="#setting" data-icon="gear" class="ui-btn-active ui-state-persist" style="background-color:#c8e000;">設定</a></li>
+			</ul>
+		</div><!-- /navbar -->
+	</div><!-- /footer -->
+</div><!-- /page three-->
+
+<div data-role="page" id="account">
+    <div data-role="header">
+        <h1>帳號設定</h1>
+    </div><!-- /header -->
+    
+    <div role="main" class="ui-content">
+        <img src="images/top_img.png" style="width: 100%" />
+    	<div class="row">
+            <div class="form-bottom">
+		        <form role="form" action="" method="post" class="login-form">
+		        	<div class="form-group">
+		            	<input type="text" name="acc_password" id="acc_password" value="" placeholder="密碼" class="form-username form-control" >
+		            </div>
+		            <div class="form-group" style="margin-top: 20px;">
+		            	<input type="password"  name="acc_password2" id="acc_password2" placeholder="密碼確認" class="form-password form-control" autocomplete="off" >
+		            </div>
+		            <a data-role="button" onclick="Pwd_check();" class="btn" style="margin-top: 20px;background: #4aaf51;color: white;">確認修改</a>
+		        </form>
+		    </div>
+        </div>
+    </div><!-- /content -->
+    
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#listview" data-icon="grid" style="background-color:#c8e000;">通知</a></li>
+                <li><a href="#index" data-icon="calendar" style="background-color:#c8e000;">行事曆</a></li>
+                <li><a href="#setting" data-icon="gear" class="ui-btn-active ui-state-persist" style="background-color:#c8e000;">設定</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /page four-->
+
+<div data-role="page" id="broadcast">
+    <div data-role="header">
+        <h1>通知設定</h1>
+    </div><!-- /header -->
+    
+    <div role="main" class="ui-content">
+        <img src="images/top_img.png" style="width: 100%" />
+        <div style="padding-top:20%;">
+            <spam style="font-size:20px;font-weight:bold;padding-right:15%;">通知設定</spam>
+            <select name="flip-2" id="flip-2" data-role="flipswitch" data-theme="b">
+                <option value="off">Off</option>
+                <option value="on">On</option>
+            </select>
+        </div>
+        
+        <div id="seltime">
+	        <label for="select-choice-a" class="select" style="padding-top:20px;">請選擇通知時間</label>
+	        <select name="select-choice-a" id="select-choice-a" data-native-menu="false">
+	                <option value="0">&nbsp;</option>
+	                <option value="5">5分鐘前</option>
+	                <option value="15">15分鐘前</option>
+	                <option value="30">30分鐘前</option>
+	                <option value="60">1小時前</option>
+	        </select>
+    	</div>
+    </div><!-- /content -->
+    
+    <div data-role="footer" data-position="fixed">
+        <div data-role="navbar">
+            <ul>
+                <li><a href="#listview" data-icon="grid" style="background-color:#c8e000;">通知</a></li>
+                <li><a href="#index" data-icon="calendar" style="background-color:#c8e000;">行事曆</a></li>
+                <li><a href="#setting" data-icon="gear" class="ui-btn-active ui-state-persist" style="background-color:#c8e000;">設定</a></li>
+            </ul>
+        </div><!-- /navbar -->
+    </div><!-- /footer -->
+</div><!-- /page five-->
+
+</body>
+</html>
